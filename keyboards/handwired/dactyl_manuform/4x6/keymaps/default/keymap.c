@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "quantum/keymap_extras/keymap_swedish.h"
 
 
 #define _BASE 0
