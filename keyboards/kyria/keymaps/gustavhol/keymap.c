@@ -31,7 +31,6 @@ enum layers {
     _QWERTY = 0,
     _LOWER,
     _RAISE,
-    _ARROWS,
     _ADJUST
 };
 
@@ -53,8 +52,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
         KC_ESC  , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,                                                             KC_Y   , KC_U   , KC_I   , KC_O  , KC_P   , KC_LBRC,
         S_TAB   , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,                                                             KC_H   , KC_J   , KC_K   , KC_L  , KC_SCLN, KC_QUOT,
-        G_C_A   , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,   LT(_ARROWS, _______)  , KC_LCTRL,  KC_1,  KC_LSFT,     KC_N   , KC_M   , KC_COMM, KC_DOT, SE_SCLN, KC_SFTENT,
-                               KC_LALT, KC_LGUI, LT(_LOWER, KC_BSPC), LT(_LOWER, KC_BSPC), LT(_LOWER, KC_SPC), KC_2,  LT(_RAISE,KC_ENTER), KC_LGUI, KC_DEL, LGUI(KC_LSFT)
+        G_C_A   , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,   _______  , KC_LCTRL,  KC_1,  KC_LSFT,     KC_N   , KC_M   , KC_COMM, KC_DOT, SE_SCLN, KC_SFTENT,
+                               KC_LALT, KC_LGUI, LT(_LOWER, KC_BSPC), LT(_LOWER, KC_BSPC), LT(_LOWER, KC_SPC), KC_2,  LT(_RAISE,KC_ENTER), KC_LGUI, KC_DEL, G(KC_LSFT)
 
 
       /* LT(_RAISE, KC_ESC),       KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_PIPE, */
@@ -115,13 +114,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 
-    [_ARROWS] = LAYOUT(
-                       RESET,   _______, _______, _______, _______, _______,                                       _______, _______, _______ , _______, _______, _______,
-                       _______, _______, _______, _______, _______, _______,                                   KC_LEFT, KC_DOWN  , KC_UP  , KC_RIGHT  , _______, _______,
-                       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______   , _______, _______,
-                                                 _______, _______, _______, _______, _______,_______, _______, _______, _______, _______
-                       
-                       ),
 /*
  * Adjust Layer: Function keys, RGB
  *
@@ -138,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_ADJUST] = LAYOUT(
       _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                       KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
-      _______, RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI, RGB_MOD,                                     _______, _______, _______, KC_F11,  KC_F12,  _______,
+      _______, RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI, RGB_MOD,                                     KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT,  _______,  _______,
       _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD,_______, _______, _______, _______, _______, _______, _______, _______, _______, DF(_QWERTY),
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
