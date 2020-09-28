@@ -8,7 +8,7 @@ extern keymap_config_t keymap_config;
 #define _BASE 0
 #define _RAISE 1
 #define _LOWER 2
-#define _ARROWS 3
+#define _ADJUST 3
 
 // Fillers to make layering more clear
 
@@ -22,6 +22,14 @@ extern keymap_config_t keymap_config;
 #define S_TAB SFT_T(KC_TAB)
 #define G_C_A LGUI(LCTL(KC_A))
 #define G_C_M LGUI(LCTL(KC_M))
+#define SFT_A SFT_T(KC_A)
+#define CTL_S CTL_T(KC_S)
+#define ALT_D ALT_T(KC_D)
+#define GUI_F GUI_T(KC_F)
+#define GUI_J GUI_T(KC_J)
+#define ALT_K ALT_T(KC_K)
+#define CTL_L CTL_T(KC_L)
+#define SFT_OE SFT_T(KC_SCLN)
 
 enum custom_keycodes {
     SENS,
@@ -31,7 +39,7 @@ enum custom_keycodes {
 
 #define RAISE MO(_RAISE)
 #define LOWER MO(_LOWER)
-#define ARROWS MO(_ARROWS)
+#define ADJUST MO(_ADJUST)
 
 // #define MEDIA_KEY_DELAY 10
 
@@ -58,14 +66,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                                           +-------------+ +-------------+
      */
 
+/* MED HOME ROW MODIFIERS */
     [_BASE] = LAYOUT(KC_ESC  , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,              KC_Y   , KC_U   , KC_I   , KC_O  , KC_P   , KC_LBRC,
-                     S_TAB   , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,              KC_H   , KC_J   , KC_K   , KC_L  , KC_SCLN, KC_QUOT,
-                     G_C_A   , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,              KC_N   , KC_M   , KC_COMM, KC_DOT, SE_SCLN, KC_SFTENT,
-                                        KC_LALT, KC_LGUI ,                                                 KC_DEL , KC_LGUI,
+                     S_TAB   , SFT_A  , CTL_S  , ALT_D  , GUI_F  , KC_G   ,              KC_H   , GUI_J  , ALT_K  , CTL_L , SFT_OE , KC_QUOT,
+                     G_C_A   , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,              KC_N   , KC_M   , KC_COMM, KC_DOT, SE_SCLN, G(KC_LSFT),
+                                        _______, _______ ,                                                 KC_DEL , _______,
 
                                  LT(LOWER, KC_BSPC)  , LT(LOWER, KC_SPC),              LT(RAISE,KC_ENTER), G(KC_LSFT),
-                                          LT(ARROWS, _______), KC_LCTRL,                KC_LSFT, KC_LGUI,
+                                          LT(ADJUST, _______), _______,                _______, _______,
                                                         _______, KC_DEL,               KC_MPLY , KC_F12),
+
+/* UTAN HOME ROW MODIFIERS */
+    /* [_BASE] = LAYOUT(KC_ESC  , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,              KC_Y   , KC_U   , KC_I   , KC_O  , KC_P   , KC_LBRC, */
+    /*                  S_TAB   , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,              KC_H   , KC_J   , KC_K   , KC_L  , KC_SCLN, KC_QUOT, */
+    /*                  G_C_A   , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,              KC_N   , KC_M   , KC_COMM, KC_DOT, SE_SCLN, KC_SFTENT, */
+    /*                                     KC_LALT, KC_LGUI ,                                                 KC_DEL , KC_LGUI, */
+
+    /*                              LT(LOWER, KC_BSPC)  , LT(LOWER, KC_SPC),              LT(RAISE,KC_ENTER), G(KC_LSFT), */
+    /*                                       LT(ADJUST, _______), KC_LCTRL,                KC_LSFT, KC_LGUI, */
+    /*                                                     _______, KC_DEL,               KC_MPLY , KC_F12), */
 
     [_RAISE] = LAYOUT(_______, SE_UNDS, SE_AMPR, SE_GRV , SE_LCBR, SE_RCBR,              SE_LESS, SE_GRTR, SE_EQL , SE_PLUS, _______, KC_F10,
                       _______, SE_MINS , SE_APOS, SE_QUO2, SE_LPRN, SE_RPRN,             SE_LBRC, SE_RBRC, SE_COLN, SE_SLSH , SE_AT  , C(S(KC_7)),
@@ -83,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                           _______, _______,              _______, _______,
                                                           _______, _______,              _______, _______),
 
-    [_ARROWS] = LAYOUT(RESET,   _______, _______, _______, _______, _______,                _______, _______, _______ , _______, _______, _______,
+    [_ADJUST] = LAYOUT(RESET,   _______, _______, _______, _______, _______,                _______, _______, _______ , _______, _______, _______,
                        _______, _______, _______, _______, _______, _______,                KC_LEFT, KC_DOWN  , KC_UP  , KC_RIGHT  , _______, _______,
                        _______, _______, _______, _______, _______, _______,                _______, _______, _______, _______   , _______, _______,
                                          S(A(KC_DOWN)), S(A(KC_UP)),                                    S(A(KC_LEFT)), S(A(KC_RIGHT)),
@@ -92,6 +111,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                           _______, _______,              _______, _______)
 
 };
+
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
 
 uint8_t sensVal = 1;
 bool sensAdj = false;

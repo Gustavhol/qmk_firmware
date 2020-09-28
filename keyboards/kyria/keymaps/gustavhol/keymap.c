@@ -159,9 +159,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //     ),
 };
 
-/* layer_state_t layer_state_set_user(layer_state_t state) { */
-/*     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST); */
-/* } */
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
 
 void persistent_default_layer_set(uint16_t _QWERTY) {
     eeconfig_update_default_layer(_QWERTY);
