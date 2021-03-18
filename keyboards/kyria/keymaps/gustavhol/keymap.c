@@ -17,6 +17,7 @@
 #include "quantum/keymap_extras/keymap_swedish.h"
 
 #define _______ KC_TRNS
+#define xxxxxxx KC_NO
 #define SFT_ESC SFT_T(KC_ESC)
 #define CTL_BSPC CTL_T(KC_BSPC)
 #define ALT_SPC ALT_T(KC_SPC)
@@ -25,6 +26,14 @@
 #define S_TAB SFT_T(KC_TAB)
 #define G_C_A LGUI(LCTL(KC_A))
 #define G_C_M LGUI(LCTL(KC_M))
+#define SFT_A SFT_T(KC_A)
+#define CTL_S CTL_T(KC_S)
+#define ALT_D ALT_T(KC_D)
+#define GUI_F GUI_T(KC_F)
+#define GUI_J GUI_T(KC_J)
+#define ALT_K ALT_T(KC_K)
+#define CTL_L CTL_T(KC_L)
+#define SFT_OE SFT_T(KC_SCLN)
 
 
 enum layers {
@@ -51,9 +60,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_QWERTY] = LAYOUT(
         KC_ESC  , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,                                                             KC_Y   , KC_U   , KC_I   , KC_O  , KC_P   , KC_LBRC,
-        S_TAB   , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,                                                             KC_H   , KC_J   , KC_K   , KC_L  , KC_SCLN, KC_QUOT,
-        G_C_A   , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,   _______  , KC_LCTRL,  KC_1,  KC_LSFT,     KC_N   , KC_M   , KC_COMM, KC_DOT, SE_SCLN, KC_SFTENT,
-                               KC_LALT, KC_LGUI, LT(_LOWER, KC_BSPC), LT(_LOWER, KC_BSPC), LT(_LOWER, KC_SPC), KC_2,  LT(_RAISE,KC_ENTER), KC_LGUI, KC_DEL, G(KC_LSFT)
+        S_TAB   , SFT_A  , CTL_S  , ALT_D  , GUI_F  , KC_G   ,                                                             KC_H   , GUI_J  , ALT_K  , CTL_L , SFT_OE , KC_QUOT,
+        G_C_A   , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,   _______  , KC_LCTRL,                  KC_1,  KC_LSFT,     KC_N   , KC_M   , KC_COMM, KC_DOT, SE_SCLN, KC_DEL,
+
+               xxxxxxx , xxxxxxx, xxxxxxx, LT(_LOWER, KC_BSPC), LT(_LOWER, KC_SPC),   LT(_RAISE, KC_ENTER),  MO(_RAISE), xxxxxxx, xxxxxxx, KC_MPLY
 
 
       /* LT(_RAISE, KC_ESC),       KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_PIPE, */
@@ -78,8 +88,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_LOWER] = LAYOUT(
       DF(_QWERTY), _______, _______, _______, _______, _______,                                    _______, KC_7   , KC_8   , KC_9   , _______, KC_MUTE,
       KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                                      _______, KC_4   , KC_5   , KC_6   , _______, KC_VOLU,
-      KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, _______, _______, _______, _______, _______, KC_1   , KC_2   , KC_3   , _______, KC_VOLD,
-                                 _______, _______, _______, _______, _______, _______, _______, KC_0, _______, _______
+      KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, _______, _______, _______, _______, KC_0, KC_1   , KC_2   , KC_3   , _______, KC_VOLD,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 
       /* _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                     _______, _______, _______, _______, _______, KC_BSLS, */
       /* _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_PLUS, KC_MINS, KC_SLSH, KC_ASTR, KC_PERC, KC_QUOT, */
@@ -129,7 +139,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_ADJUST] = LAYOUT(
-      _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                       KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
+      RESET  , _______, _______, _______, _______, _______,                                  KC_HOME, KC_PGDN,  KC_PGUP , KC_END , _______, _______,
       _______, RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI, RGB_MOD,                                     KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT,  _______,  _______,
       _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD,_______, _______, _______, _______, _______, _______, _______, _______, _______, DF(_QWERTY),
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -161,6 +171,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
+
+//  Per key tapping term
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case ALT_D:
+            return 300;
+        case ALT_K:
+            return 300;
+        case CTL_L:
+            return 300;
+        case SFT_OE:
+            return 150;
+        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+            return 150;
+        default:
+            return TAPPING_TERM;
+    }
 }
 
 void persistent_default_layer_set(uint16_t _QWERTY) {
@@ -254,9 +282,9 @@ void encoder_update_user(uint8_t index, bool clockwise) {
     else if (index == 1) {
         // Page up/Page down
         if (clockwise) {
-            tap_code(KC_PGDN);
+            tap_code(KC_VOLU);
         } else {
-            tap_code(KC_PGUP);
+            tap_code(KC_VOLD);
         }
     }
 }
