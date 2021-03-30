@@ -34,12 +34,18 @@
 #define ALT_K ALT_T(KC_K)
 #define CTL_L CTL_T(KC_L)
 #define SFT_OE SFT_T(KC_SCLN)
-
+#define WS1_E LT(_WS1, KC_E)
+#define WS2_R LT(_WS2, KC_R)
+#define LOW_BSPC LT(_LOWER, KC_BSPC)
+#define LOW_SPC LT(_LOWER, KC_SPC)
+#define RIS_ENT LT(_RAISE, KC_ENTER)
 
 enum layers {
     _QWERTY = 0,
     _LOWER,
     _RAISE,
+    _WS1,
+    _WS2,
     _ADJUST
 };
 
@@ -59,11 +65,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-        KC_ESC  , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,                                                             KC_Y   , KC_U   , KC_I   , KC_O  , KC_P   , KC_LBRC,
-        S_TAB   , SFT_A  , CTL_S  , ALT_D  , GUI_F  , KC_G   ,                                                             KC_H   , GUI_J  , ALT_K  , CTL_L , SFT_OE , KC_QUOT,
-        G_C_A   , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,   _______  , KC_LCTRL,                  KC_1,  KC_LSFT,     KC_N   , KC_M   , KC_COMM, KC_DOT, SE_SCLN, KC_DEL,
+        KC_ESC  , KC_Q   , KC_W   , WS1_E  , WS2_R  , KC_T   ,                                             KC_Y   , KC_U   , KC_I   , KC_O  , KC_P   , KC_LBRC,
+        S_TAB   , SFT_A  , CTL_S  , ALT_D  , GUI_F  , KC_G   ,                                             KC_H   , GUI_J  , ALT_K  , CTL_L , SFT_OE , KC_QUOT,
+        G_C_A   , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , xxxxxxx, xxxxxxx,   xxxxxxx, xxxxxxx,  KC_N   , KC_M   , KC_COMM, KC_DOT, SE_SCLN, KC_DEL,
 
-               xxxxxxx , xxxxxxx, xxxxxxx, LT(_LOWER, KC_BSPC), LT(_LOWER, KC_SPC),   LT(_RAISE, KC_ENTER),  MO(_RAISE), xxxxxxx, xxxxxxx, KC_MPLY
+                             xxxxxxx , xxxxxxx, xxxxxxx, LOW_BSPC , LOW_SPC ,          RIS_ENT ,  MO(_RAISE), xxxxxxx, xxxxxxx, KC_MPLY
 
 
       /* LT(_RAISE, KC_ESC),       KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_PIPE, */
@@ -122,6 +128,56 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       /*                            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ */
     ),
 
+/*
+ * WS1 Layer: Symbols
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |        |  !   |  @   |  {   |  }   |  |   |                              |      |      |      |      |      |  | \   |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |        |  #   |  $   |  (   |  )   |  `   |                              |   +  |  -   |  /   |  *   |  %   |  ' "   |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |        |  %   |  ^   |  [   |  ]   |  ~   |      |      |  |      |      |   &  |  =   |  ,   |  .   |  / ? | - _    |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      |      |      |  ;   |  =   |  |  =   |  ;   |      |      |      |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_WS1] = LAYOUT(
+      DF(_QWERTY), _______, _______, _______, _______, _______,                                    _______, G(KC_7)   , G(KC_8)   , G(KC_9)   , _______, KC_MUTE,
+      KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                                      _______, G(KC_4)   , G(KC_5)   , G(KC_6)   , _______, KC_VOLU,
+      KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, _______, _______, _______, _______, G(KC_0), G(KC_1)   , G(KC_2)   , G(KC_3)   , _______, KC_VOLD,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+
+      /* _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                     _______, _______, _______, _______, _______, KC_BSLS, */
+      /* _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_PLUS, KC_MINS, KC_SLSH, KC_ASTR, KC_PERC, KC_QUOT, */
+      /* _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_AMPR, KC_EQL,  KC_COMM, KC_DOT,  KC_SLSH, KC_MINS, */
+      /*                            _______, _______, _______, KC_SCLN, KC_EQL,  KC_EQL,  KC_SCLN, _______, _______, _______ */
+    ),
+/*
+ * WS2 Layer: Symbols
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |        |  !   |  @   |  {   |  }   |  |   |                              |      |      |      |      |      |  | \   |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |        |  #   |  $   |  (   |  )   |  `   |                              |   +  |  -   |  /   |  *   |  %   |  ' "   |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |        |  %   |  ^   |  [   |  ]   |  ~   |      |      |  |      |      |   &  |  =   |  ,   |  .   |  / ? | - _    |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      |      |      |  ;   |  =   |  |  =   |  ;   |      |      |      |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_WS2] = LAYOUT(
+      DF(_QWERTY), _______, _______, _______, _______, _______,                                    _______, G(S(KC_7))   , G(S(KC_8))   , G(S(KC_9))   , _______, KC_MUTE,
+      KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                                      _______, G(S(KC_4))   , G(S(KC_5))   , G(S(KC_6))   , _______, KC_VOLU,
+      KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, _______, _______, _______, _______, G(S(KC_0)), G(S(KC_1))   , G(S(KC_2))   , G(S(KC_3))   , _______, KC_VOLD,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+
+      /* _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                     _______, _______, _______, _______, _______, KC_BSLS, */
+      /* _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_PLUS, KC_MINS, KC_SLSH, KC_ASTR, KC_PERC, KC_QUOT, */
+      /* _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_AMPR, KC_EQL,  KC_COMM, KC_DOT,  KC_SLSH, KC_MINS, */
+      /*                            _______, _______, _______, KC_SCLN, KC_EQL,  KC_EQL,  KC_SCLN, _______, _______, _______ */
+    ),
 
 
 /*
@@ -182,9 +238,19 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return 300;
         case CTL_L:
             return 300;
+        case WS1_E:
+            return 300;
+        case WS2_R:
+            return 300;
         case SFT_OE:
             return 150;
-        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+        case LOW_BSPC:
+            return 150;
+        case LOW_SPC:
+            return 150;
+        case RIS_ENT:
+            return 150;
+        case MO(_RAISE):
             return 150;
         default:
             return TAPPING_TERM;
